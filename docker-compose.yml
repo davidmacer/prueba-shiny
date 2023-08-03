@@ -1,0 +1,33 @@
+version: "3.3"
+
+services:
+  rstudio:
+    image: davidmacer/rstudio
+    container_name: rstudio-prueba
+    restart: always
+    volumes:
+      - type: volume
+        source: rstudio
+        target: /app
+      - type: bind
+        source: .
+        target: /home/rstudio
+    environment:
+      - PASSWORD=rstudio
+    ports:
+      - "8888:8787"
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cont-prueba
+    restart: always
+    volumes: 
+      - .:/app
+    ports: 
+      - "3838:4040"
+      
+volumes:
+  app:
+  rstudio:
